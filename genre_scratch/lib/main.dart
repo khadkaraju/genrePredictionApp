@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import './firsttab.dart' as firsttab;
 import './secondtab.dart' as secondtab;
-import './thirdtab.dart' as thirdtab;
+import './webview.dart' as webview;
+
+void main() {
+  runApp(MyHomePage());
+}
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -28,36 +32,42 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Genre Predictor '),
-      ),
-      body: TabBarView(
-        controller: controller,
-        children: <Widget>[
-          firsttab.FirstTab(),
-          secondtab.SecondTab(),
-          thirdtab.ThirdTab(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (currentIndex) {
-          setState(() {
-            _currentIndex = currentIndex;
-          });
+    return MaterialApp(
+      home: Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(30.0), // here the desired height
+            child: AppBar(
+              centerTitle: true,
+              title: Text('Genre Identification '),
+            )),
+        body: TabBarView(
+          controller: controller,
+          children: <Widget>[
+            webview.webviewTab(),
+            firsttab.FirstTab(),
+            secondtab.SecondTab(),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (currentIndex) {
+            setState(() {
+              _currentIndex = currentIndex;
+            });
 
-          controller.animateTo(_currentIndex);
-        },
-        items: [
-          BottomNavigationBarItem(title: Text("Home"), icon: Icon(Icons.home)),
-          BottomNavigationBarItem(
-              title: Text("2D Graph"), icon: Icon(Icons.graphic_eq)),
-          BottomNavigationBarItem(
-              title: Text("Profile"), icon: Icon(Icons.person))
-        ],
+            controller.animateTo(_currentIndex);
+          },
+          items: [
+            BottomNavigationBarItem(
+                title: Text("WebView"), icon: Icon(Icons.web)),
+            BottomNavigationBarItem(
+                title: Text("Home"), icon: Icon(Icons.home)),
+            BottomNavigationBarItem(
+                title: Text("2D Graph"), icon: Icon(Icons.graphic_eq))
+          ],
+        ),
       ),
     );
   }
 }
+//http://35.193.25.142/

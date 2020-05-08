@@ -19,9 +19,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  webview_flutter: ^0.3.20
+  flutter_custom_tabs: ^0.6.0
   cloud_firestore:
   url_launcher: ^5.4.2
+  flutter_webview_plugin: ^0.3.11
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -9,43 +9,54 @@ class SecondTab extends StatefulWidget {
 class _SecondTabState extends State<SecondTab> {
   Widget _imageDisplay(BuildContext context, DocumentSnapshot document) {
     return ListTile(
-      title: Image(
-        image: NetworkImage(document['Image'].toString()),
-      ),
-    );
+        title: Column(
+      children: <Widget>[
+        Image(
+          image: NetworkImage(document['link'].toString()),
+        ),
+        Image(
+          image: NetworkImage(document['link_prediction'].toString()),
+        ),
+      ],
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: <Widget>[
-        Flexible(
-          flex: 2,
-          child: StreamBuilder(
-              stream: Firestore.instance.collection('Genre').snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData)
-                  return const Text('Loading...');
-                else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemExtent: 1000.0,
-                    itemCount: 1,
-                    itemBuilder: (context, index) => _imageDisplay(
-                        context, snapshot.data.documents[index + 1]),
-                  );
-                }
-              }),
-        ),
-        Text(
-          "Frequency Spectrum",
-          style: TextStyle(
-            fontSize: 30.0,
-            fontWeight: FontWeight.w600,
+    return MaterialApp(
+      home: Scaffold(
+          body: Column(
+        children: <Widget>[
+          Flexible(
+            flex: 2,
+            child: StreamBuilder(
+                stream: Firestore.instance.collection('mfcc').snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return const Text('Loading...');
+                  else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemExtent: 1000.0,
+                      itemCount: 1,
+                      itemBuilder: (context, index) => _imageDisplay(
+                          context, snapshot.data.documents[index]),
+                    );
+                  }
+                }),
           ),
-        )
-      ],
-    ));
+          Container(
+            padding: EdgeInsets.all(30.0),
+            child: Text(
+              "Frequency Spectrum",
+              style: TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          )
+        ],
+      )),
+    );
   }
 }
